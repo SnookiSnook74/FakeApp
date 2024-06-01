@@ -17,6 +17,7 @@ struct ExpenseView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .keyboardType(.numberPad)
+                .frame(width: 170)
             TextField("Введите описание", text: $description)
                 .font(.system(size: 12))
                 .foregroundColor(.gray)
@@ -25,4 +26,8 @@ struct ExpenseView: View {
         .frame(maxWidth: .infinity, maxHeight: 80, alignment: .leading)
         .background(Color.white)
     }
+}
+
+#Preview {
+    ContentView()
 }

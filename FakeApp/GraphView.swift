@@ -94,7 +94,7 @@ struct BarChartView: View {
 }
 
 struct GraphView: View {
-    let data = [0, 125, 3231, 0, 0, 0, 0, 50000]
+    let data = [0, 3231, 0, 0, 0, 0, 465, 3635]
     @State private var highlightedIndex: Int = 7
     
     var body: some View {

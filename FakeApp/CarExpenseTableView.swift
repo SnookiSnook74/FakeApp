@@ -16,7 +16,7 @@ struct CarExpenseRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                TextField("Автомобиль", text: $car)
+                TextField("", text: $car)
                     .font(.headline)
                     .frame(width: 120)
                     .fixedSize(horizontal: true, vertical: false)
@@ -34,6 +34,7 @@ struct CarExpenseRow: View {
                     .fixedSize(horizontal: true, vertical: false)
                     .multilineTextAlignment(.trailing)
                 Button(action: {
+                    // Действие для стрелки
                 }) {
                     Image(systemName: "chevron.down")
                         .foregroundColor(.blue)
@@ -56,16 +57,26 @@ struct CarExpense: Identifiable {
     var carDescript: String
 }
 
+struct CarExpenseHeaderView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("АВТОМОБИЛЬ")
+                .font(.system(size: 13))
+                .foregroundColor(.gray)
+                .padding(.horizontal)
+                .padding(.bottom, -8)
+                .frame(height: 45, alignment: .leading)
+            Divider()
+        }
+    }
+}
+
 struct CarExpenseTableView: View {
     @Binding var carExpenses: [CarExpense]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("АВТОМОБИЛЬ")
-                .font(.caption)
-                .padding(.horizontal)
-                .frame(height: 50)
-            Divider()
+            CarExpenseHeaderView()
             ForEach($carExpenses) { $expense in
                 CarExpenseRow(car: $expense.car, amount: $expense.amount, carDescript: $expense.carDescript, onDelete: {
                     if let index = carExpenses.firstIndex(where: { $0.id == expense.id }) {
