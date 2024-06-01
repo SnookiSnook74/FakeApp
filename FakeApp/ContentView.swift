@@ -32,7 +32,7 @@ struct DateView: View {
                 }
             }
         }
-        .padding()
+        .padding(.horizontal)
         .frame(maxWidth: .infinity)
     }
 }
@@ -50,51 +50,43 @@ struct BarChartView: View {
     let data = [0, 125, 3231, 0, 0, 0, 0, 465]
     
     var body: some View {
-        VStack {
-            HStack(spacing: 4) {
-                ForEach(data.indices, id: \.self) { index in
-                    Text("\(data[index]) ₽")
-                        .font(.system(size: 8))
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .padding(.bottom, 10)
-            
+        VStack(spacing: 0) {
             HStack(spacing: 20) {
                 ForEach(data.indices, id: \.self) { index in
-                    ZStack {
-                        DashedLine()
-                            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                            .foregroundColor(.gray.opacity(0.5))
-                            .frame(height: 350)
-                        
-                        VStack {
-                            Spacer()
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
-                                .frame(height: CGFloat(data[index]) / 10)
+                    VStack {
+                        Text("\(data[index]) ₽")
+                            .font(.system(size: 8))
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity)
+                        ZStack {
+                            DashedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                .foregroundColor(.gray.opacity(0.5))
+                                .frame(height: 200)
+                            
+                            VStack {
+                                Spacer()
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
+                                    .frame(height: CGFloat(data[index]) / 20)
+                            }
                         }
+                        .frame(maxHeight: 200, alignment: .bottom)
                     }
-                    .frame(maxHeight: .infinity, alignment: .bottom)
                 }
             }
-            .padding(.horizontal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, 340)
-        .background(Color.white)
     }
 }
 
-
-
 struct ContentView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             BarChartView()
             DateView()
         }
+        .background(Color(.systemGray6))
     }
 }
 
