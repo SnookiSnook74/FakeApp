@@ -19,18 +19,21 @@ struct CarExpenseRow: View {
                 TextField("Автомобиль", text: $car)
                     .font(.headline)
                     .frame(width: 120)
+                    .fixedSize(horizontal: true, vertical: false)
                 TextField("", text: $carDescript)
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .frame(width: 90)
+                    .fixedSize(horizontal: true, vertical: false)
             }
             Spacer()
             HStack(spacing: 4) {
                 TextField("Сумма", text: $amount)
-                    .font(.system(size: 15))
-                    .frame(width: 100)
+                    .font(.system(size: 13))
+                    .frame(width: 140)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .multilineTextAlignment(.trailing)
                 Button(action: {
-                    // Действие для стрелки
                 }) {
                     Image(systemName: "chevron.down")
                         .foregroundColor(.blue)
@@ -91,7 +94,7 @@ struct ContentView: View {
         CarExpense(car: "С 329 АХ 40", amount: "215 ₽ (46%)", carDescript: "(стария)"),
         CarExpense(car: "С 480 АС 40", amount: "125 ₽ (27%)", carDescript: "(прадо)"),
         CarExpense(car: "У 177 АА 797", amount: "125 ₽ (27%)", carDescript: "(порше 718)"),
-        CarExpense(car: "Все", amount: "465 ₽ (100%)", carDescript: "")
+        CarExpense(car: "Все", amount: "14 465 ₽ (100%)", carDescript: "")
     ]
     
     var body: some View {
