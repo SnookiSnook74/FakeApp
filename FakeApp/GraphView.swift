@@ -47,7 +47,7 @@ struct BarChartView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 20) {
+            HStack(spacing: 15) {
                 ForEach(data.indices, id: \.self) { index in
                     VStack {
                         Text("\(data[index]) ₽")
@@ -94,7 +94,7 @@ struct BarChartView: View {
 }
 
 struct GraphView: View {
-    let data = [0, 125, 3231, 0, 0, 0, 0, 5000]
+    let data = [0, 125, 3231, 0, 0, 0, 0, 50000]
     @State private var highlightedIndex: Int = 7
     
     var body: some View {
@@ -125,4 +125,8 @@ struct GraphView: View {
         
         return dates.reversed()
     }
+}
+
+#Preview {
+    ContentView()
 }
