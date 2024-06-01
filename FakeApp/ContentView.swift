@@ -48,6 +48,8 @@ struct DashedLine: Shape {
 
 struct BarChartView: View {
     let data = [0, 125, 3231, 0, 0, 0, 0, 465]
+    // Индекс зеленого стобца
+    let highlightedIndex = 2
     
     var body: some View {
         VStack(spacing: 0) {
@@ -67,7 +69,7 @@ struct BarChartView: View {
                             VStack {
                                 Spacer()
                                 RoundedRectangle(cornerRadius: 5)
-                                    .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
+                                    .fill(index == highlightedIndex ? Color.green.opacity(0.8) : Color.gray.opacity(0.5))
                                     .frame(height: CGFloat(data[index]) / 20)
                             }
                         }
@@ -79,6 +81,7 @@ struct BarChartView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
 
 struct ContentView: View {
     var body: some View {
