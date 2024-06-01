@@ -39,7 +39,7 @@ struct DashedLine: Shape {
 
 struct BarChartView: View {
     let data: [Int]
-    let highlightedIndex: Int
+    @Binding var highlightedIndex: Int
     
     private var maxValue: Int {
         data.max() ?? 1
@@ -82,6 +82,9 @@ struct BarChartView: View {
                             }
                         }
                         .frame(maxHeight: 200, alignment: .bottom)
+                        .onTapGesture {
+                            highlightedIndex = index
+                        }
                     }
                 }
             }
@@ -90,7 +93,6 @@ struct BarChartView: View {
     }
 }
 
-/// Тут можно изменять даты и суммы (в будущем сделаем это автоматом)
 struct GraphView: View {
     let data = [0, 125, 3231, 0, 0, 0, 0, 5000]
     let dates = [
@@ -104,9 +106,11 @@ struct GraphView: View {
             ("31.05", "ПТ")
         ]
     
+    @State private var highlightedIndex: Int = 7
+    
     var body: some View {
         VStack(spacing: 0) {
-            BarChartView(data: data, highlightedIndex: 7)
+            BarChartView(data: data, highlightedIndex: $highlightedIndex)
             DateView(dates: dates)
         }
         .background(Color(.systemGray6))
