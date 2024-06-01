@@ -12,31 +12,51 @@ struct CarExpenseRow: View {
     @Binding var amount: String
     @Binding var carDescript: String
     var onDelete: () -> Void
+    @State private var showEditSheet = false
+    @State private var editField = ""
+    @State private var fieldToEdit: FieldToEdit?
+    
+    enum FieldToEdit {
+        case car, amount, carDescript
+    }
     
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                TextField("", text: $car)
+                Text(car)
                     .font(.headline)
-                    .frame(width: 120)
+                    .frame(width: 120, alignment: .leading)
                     .fixedSize(horizontal: true, vertical: false)
+                    .onTapGesture {
+                        fieldToEdit = .car
+                        editField = car
+                        showEditSheet = true
+                    }
                 if car != "Все" {
-                    TextField("", text: $carDescript)
+                    Text(carDescript)
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                        .frame(width: 90)
+                        .frame(width: 90, alignment: .leading)
                         .fixedSize(horizontal: true, vertical: false)
+                        .onTapGesture {
+                            fieldToEdit = .carDescript
+                            editField = carDescript
+                            showEditSheet = true
+                        }
                 }
             }
             Spacer()
             HStack(spacing: 4) {
-                TextField("Сумма", text: $amount)
+                Text(amount)
                     .font(.system(size: 13))
-                    .frame(width: 140)
+                    .frame(width: 140, alignment: .trailing)
                     .fixedSize(horizontal: true, vertical: false)
-                    .multilineTextAlignment(.trailing)
+                    .onTapGesture {
+                        fieldToEdit = .amount
+                        editField = amount
+                        showEditSheet = true
+                    }
                 Button(action: {
-                    // Действие для стрелки
                 }) {
                     Image(systemName: "chevron.down")
                         .foregroundColor(.blue)
@@ -49,8 +69,41 @@ struct CarExpenseRow: View {
         .onTapGesture(count: 2) {
             onDelete()
         }
+        .sheet(isPresented: $showEditSheet) {
+            VStack {
+                Text("Редактировать")
+                    .font(.headline)
+                TextField("Введите новое значение", text: $editField)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                HStack {
+                    Button("Отмена") {
+                        showEditSheet = false
+                    }
+                    .padding()
+                    Spacer()
+                    Button("Сохранить") {
+                        switch fieldToEdit {
+                        case .car:
+                            car = editField
+                        case .amount:
+                            amount = editField
+                        case .carDescript:
+                            carDescript = editField
+                        case .none:
+                            break
+                        }
+                        showEditSheet = false
+                    }
+                    .padding()
+                }
+            }
+            .padding()
+        }
     }
 }
+
+
 
 struct CarExpense: Identifiable {
     var id = UUID()
@@ -75,7 +128,7 @@ struct CarExpenseHeaderView: View {
 
 struct CarExpenseTableView: View {
     @Binding var carExpenses: [CarExpense]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             CarExpenseHeaderView()
@@ -93,12 +146,13 @@ struct CarExpenseTableView: View {
             addNewCarExpense()
         }
     }
-    
+
     func addNewCarExpense() {
-        let newExpense = CarExpense(car: "Новый автомобиль", amount: "0 ₽ (0%)", carDescript: "")
+        let newExpense = CarExpense(car: "Новый автомобиль", amount: "0 ₽ (0%)", carDescript: "описание")
         carExpenses.append(newExpense)
     }
 }
+
 
 #Preview {
     ContentView()
