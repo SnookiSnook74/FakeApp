@@ -8,16 +8,7 @@
 import SwiftUI
 
 struct DateView: View {
-    let dates = [
-        ("24.05", "ПТ"),
-        ("25.05", "СБ"),
-        ("26.05", "ВС"),
-        ("27.05", "ПН"),
-        ("28.05", "ВТ"),
-        ("29.05", "СР"),
-        ("30.05", "ЧТ"),
-        ("31.05", "ПТ")
-    ]
+    let dates: [(String, String)]
     
     var body: some View {
         LazyHStack(spacing: 22.5) {
@@ -47,8 +38,12 @@ struct DashedLine: Shape {
 }
 
 struct BarChartView: View {
-    let data = [0, 125, 3231, 0, 0, 0, 0, 1065]
-    let highlightedIndex = 2  // индекс столбца, который будет зелёным
+    let data: [Int]
+    let highlightedIndex: Int
+    
+    private var maxValue: Int {
+        data.max() ?? 1
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -56,12 +51,12 @@ struct BarChartView: View {
                 ForEach(data.indices, id: \.self) { index in
                     VStack {
                         Text("\(data[index]) ₽")
-                            .font(.system(size: 8))
+                            .font(.system(size: 7.5))
                             .foregroundColor(.gray)
                             .frame(maxWidth: .infinity)
                         ZStack {
                             DashedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [8]))
                                 .foregroundColor(.gray.opacity(0.5))
                                 .frame(height: 200)
                             
@@ -74,7 +69,7 @@ struct BarChartView: View {
                                             startPoint: .bottom,
                                             endPoint: .top
                                         ))
-                                        .frame(height: CGFloat(data[index]) / 20)
+                                        .frame(height: CGFloat(data[index]) / CGFloat(maxValue) * 200)
                                 } else {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(LinearGradient(
@@ -82,7 +77,7 @@ struct BarChartView: View {
                                             startPoint: .bottom,
                                             endPoint: .top
                                         ))
-                                        .frame(height: CGFloat(data[index]) / 20)
+                                        .frame(height: CGFloat(data[index]) / CGFloat(maxValue) * 200)
                                 }
                             }
                         }
@@ -91,18 +86,38 @@ struct BarChartView: View {
                 }
             }
         }
-        .frame(maxWidth: 380, maxHeight: 220)
+        .frame(maxWidth: 380, maxHeight: 230)
     }
 }
 
-struct ContentView: View {
+/// Тут можно изменять даты и суммы (в будущем сделаем это автоматом)
+struct GraphView: View {
+    let data = [0, 125, 3231, 0, 0, 0, 0, 5000]
+    let dates = [
+            ("24.05", "ПТ"),
+            ("25.05", "СБ"),
+            ("26.05", "ВС"),
+            ("27.05", "ПН"),
+            ("28.05", "ВТ"),
+            ("29.05", "СР"),
+            ("30.05", "ЧТ"),
+            ("31.05", "ПТ")
+        ]
+    
     var body: some View {
         VStack(spacing: 0) {
-            BarChartView()
-            DateView()
+            BarChartView(data: data, highlightedIndex: 7)
+            DateView(dates: dates)
         }
         .background(Color(.systemGray6))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+
+struct ContentView: View {
+    var body: some View {
+        GraphView()
     }
 }
 
