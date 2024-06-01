@@ -20,7 +20,7 @@ struct DateView: View {
     ]
     
     var body: some View {
-        LazyHStack(spacing: 20) {
+        LazyHStack(spacing: 23.5) {
             ForEach(dates, id: \.0) { date in
                 VStack {
                     Text(date.0)
@@ -82,7 +82,7 @@ struct BarChartView: View {
 
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: -500) {
             BarChartView()
             DateView()
         }
