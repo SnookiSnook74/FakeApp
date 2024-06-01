@@ -37,12 +37,62 @@ struct DateView: View {
     }
 }
 
+struct DashedLine: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        return path
+    }
+}
+
+struct BarChartView: View {
+    let data = [0, 125, 3231, 0, 0, 0, 0, 465]
+    
+    var body: some View {
+        VStack {
+            HStack(spacing: 20) {
+                ForEach(data.indices, id: \.self) { index in
+                    VStack {
+                        Text("\(data[index]) ₽")
+                            .font(.system(size: 8))
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity)
+                        DashedLine()
+                            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                            .foregroundColor(.gray.opacity(0.5))
+                            .frame(height: 200) // высота линии
+                    }
+                }
+            }
+            .padding(.bottom, 10)
+            
+            HStack(spacing: 20) {
+                ForEach(data.indices, id: \.self) { index in
+                    VStack {
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
+                            .frame(height: CGFloat(data[index]) / 10)
+                    }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                }
+            }
+            .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.top, 10)
+        .background(Color.white)
+    }
+}
+
+
+
 struct ContentView: View {
     var body: some View {
         VStack {
-            Spacer()
-            DateView()
-            Spacer()
+            BarChartView()
+         //   DateView()
         }
     }
 }
