@@ -25,7 +25,11 @@ struct HeaderView: View {
                 Spacer()
             }
             .padding()
+            .frame(width: 400, height: 40)
             
+            Divider()
+            Spacer()
+            Spacer()
             HStack {
                 ForEach(["Неделя", "Мес", "3 мес", "6 мес", "Год"], id: \.self) { period in
                     Button(action: {
@@ -45,6 +49,7 @@ struct HeaderView: View {
         .background(Color.white)
     }
 }
+
 
 struct ExpenseView: View {
     @Binding var amount: String
