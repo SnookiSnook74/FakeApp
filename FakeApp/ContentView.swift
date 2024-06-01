@@ -20,7 +20,7 @@ struct DateView: View {
     ]
     
     var body: some View {
-        LazyHStack(spacing: 23.5) {
+        LazyHStack(spacing: 22.5) {
             ForEach(dates, id: \.0) { date in
                 VStack {
                     Text(date.0)
@@ -33,7 +33,7 @@ struct DateView: View {
             }
         }
         .padding(.horizontal)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: 30)
     }
 }
 
@@ -47,7 +47,7 @@ struct DashedLine: Shape {
 }
 
 struct BarChartView: View {
-    let data = [0, 125, 3231, 0, 0, 0, 0, 465]
+    let data = [0, 125, 3231, 0, 0, 0, 0, 1065]
     let highlightedIndex = 2  // индекс столбца, который будет зелёным
     
     var body: some View {
@@ -77,7 +77,11 @@ struct BarChartView: View {
                                         .frame(height: CGFloat(data[index]) / 20)
                                 } else {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.gray.opacity(0.5))
+                                        .fill(LinearGradient(
+                                            gradient: Gradient(colors: [Color.gray.opacity(0.0), Color.gray.opacity(0.8)]),
+                                            startPoint: .bottom,
+                                            endPoint: .top
+                                        ))
                                         .frame(height: CGFloat(data[index]) / 20)
                                 }
                             }
@@ -87,18 +91,18 @@ struct BarChartView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: 380, maxHeight: 220)
     }
 }
 
-
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: -510) {
+        VStack(spacing: 0) {
             BarChartView()
             DateView()
         }
         .background(Color(.systemGray6))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
