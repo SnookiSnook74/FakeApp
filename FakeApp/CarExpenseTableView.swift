@@ -45,6 +45,7 @@ struct CarExpenseRow: View {
                         }
                 }
             }
+            .padding(.leading, 6)
             Spacer()
             HStack(spacing: 4) {
                 Text(amount)
