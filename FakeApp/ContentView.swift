@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isLoading = true
     @State private var amount: String = "3 635 ₽"
     @State private var description: String = "Общая сумма расходов за 01.06"
     
@@ -18,22 +19,37 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 10) {
-                HeaderView()
-                GraphView()
-                ExpenseView(amount: $amount, description: $description)
-                    .background(Color(.systemGray6))
-                CarExpenseTableView(carExpenses: $carExpenses)
+        ZStack {
+            if isLoading {
+                SplashScreenView()
+            } else {
+                ScrollView {
+                    VStack(spacing: 10) {
+                        HeaderView()
+                        GraphView()
+                        ExpenseView(amount: $amount, description: $description)
+                            .background(Color(.systemGray6))
+                        CarExpenseTableView(carExpenses: $carExpenses)
+                    }
+                }
+                .background(Color(.systemGray6))
+                .onTapGesture {
+                    hideKeyboard()
+                }
             }
         }
-        .background(Color(.systemGray6))
-        .onTapGesture {
-            hideKeyboard()
+        .onAppear {
+            loadData()
         }
     }
     
-    func hideKeyboard() {
+    private func loadData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            isLoading = false
+        }
+    }
+    
+    private func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
