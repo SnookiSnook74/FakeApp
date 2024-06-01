@@ -20,11 +20,13 @@ struct CarExpenseRow: View {
                     .font(.headline)
                     .frame(width: 120)
                     .fixedSize(horizontal: true, vertical: false)
-                TextField("", text: $carDescript)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .frame(width: 90)
-                    .fixedSize(horizontal: true, vertical: false)
+                if car != "Все" {
+                    TextField("", text: $carDescript)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .frame(width: 90)
+                        .fixedSize(horizontal: true, vertical: false)
+                }
             }
             Spacer()
             HStack(spacing: 4) {
@@ -101,4 +103,3 @@ struct CarExpenseTableView: View {
 #Preview {
     ContentView()
 }
-

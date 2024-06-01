@@ -38,8 +38,10 @@ struct DashedLine: Shape {
 }
 
 struct BarChartView: View {
-    let data: [Int]
+    @Binding var data: [Int]
     @Binding var highlightedIndex: Int
+    @State private var showEditSheet = false
+    @State private var newAmount: String = ""
     
     private var maxValue: Int {
         data.max() ?? 1
@@ -54,6 +56,11 @@ struct BarChartView: View {
                             .font(.system(size: 7.5))
                             .foregroundColor(.gray)
                             .frame(maxWidth: .infinity)
+                            .onTapGesture {
+                                highlightedIndex = index
+                                newAmount = "\(data[index])"
+                                showEditSheet = true
+                            }
                         ZStack {
                             DashedLine()
                                 .stroke(style: StrokeStyle(lineWidth: 1, dash: [8]))
@@ -82,24 +89,46 @@ struct BarChartView: View {
                             }
                         }
                         .frame(maxHeight: 200, alignment: .bottom)
-                        .onTapGesture {
-                            highlightedIndex = index
-                        }
                     }
                 }
             }
         }
         .frame(maxWidth: 380, maxHeight: 230)
+        .sheet(isPresented: $showEditSheet) {
+            VStack {
+                Text("Исправить сумму")
+                    .font(.headline)
+                TextField("Вводи новую сумму", text: $newAmount)
+                    .keyboardType(.numberPad)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                HStack {
+                    Button("Выйти") {
+                        showEditSheet = false
+                    }
+                    .padding()
+                    Spacer()
+                    Button("Сохранить") {
+                        if let amount = Int(newAmount) {
+                            data[highlightedIndex] = amount
+                        }
+                        showEditSheet = false
+                    }
+                    .padding()
+                }
+            }
+            .padding()
+        }
     }
 }
 
 struct GraphView: View {
-    let data = [0, 3231, 0, 0, 0, 0, 465, 3635]
+    @State private var data = [0, 3231, 0, 0, 0, 0, 465, 3635]
     @State private var highlightedIndex: Int = 7
     
     var body: some View {
         VStack(spacing: 0) {
-            BarChartView(data: data, highlightedIndex: $highlightedIndex)
+            BarChartView(data: $data, highlightedIndex: $highlightedIndex)
             DateView(dates: generateDates())
         }
         .background(Color(.systemGray6))
