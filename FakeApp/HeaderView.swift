@@ -29,7 +29,7 @@ struct HeaderView: View {
             Divider()
             Spacer()
             Spacer()
-            HStack(spacing: 29){
+            HStack(spacing: 28){
                 ForEach(["Неделя", "Мес", "3 мес", "6 мес", "Год"], id: \.self) { period in
                     Button(action: {
                         selectedPeriod = period

@@ -95,25 +95,34 @@ struct BarChartView: View {
 
 struct GraphView: View {
     let data = [0, 125, 3231, 0, 0, 0, 0, 5000]
-    let dates = [
-            ("24.05", "ПТ"),
-            ("25.05", "СБ"),
-            ("26.05", "ВС"),
-            ("27.05", "ПН"),
-            ("28.05", "ВТ"),
-            ("29.05", "СР"),
-            ("30.05", "ЧТ"),
-            ("31.05", "ПТ")
-        ]
-    
     @State private var highlightedIndex: Int = 7
     
     var body: some View {
         VStack(spacing: 0) {
             BarChartView(data: data, highlightedIndex: $highlightedIndex)
-            DateView(dates: dates)
+            DateView(dates: generateDates())
         }
         .background(Color(.systemGray6))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    func generateDates() -> [(String, String)] {
+        var dates = [(String, String)]()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM"
+        
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "E"
+        dayFormatter.locale = Locale(identifier: "ru_RU")
+        
+        for i in 0..<8 {
+            if let date = Calendar.current.date(byAdding: .day, value: -i, to: Date()) {
+                let dateString = dateFormatter.string(from: date)
+                let dayString = dayFormatter.string(from: date).capitalized
+                dates.append((dateString, dayString))
+            }
+        }
+        
+        return dates.reversed()
     }
 }
