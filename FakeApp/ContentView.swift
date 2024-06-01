@@ -7,22 +7,31 @@
 
 import SwiftUI
 
-struct ExpenseView: View {
-    @Binding var amount: String
-    @Binding var description: String
+struct CarExpenseRow: View {
+    let car: String
+    let amount: Int
+    let percentage: Int
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            TextField("Введите сумму", text: $amount)
-                .font(.title)
-                .fontWeight(.bold)
-                .keyboardType(.numberPad)
-            TextField("Введите описание", text: $description)
-                .font(.system(size: 12))
-                .foregroundColor(.gray)
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(car)
+                    .font(.headline)
+                Text("(машина)")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            VStack(alignment: .trailing, spacing: 4) {
+                Text("\(amount) ₽")
+                    .font(.headline)
+                Text("\(percentage)%")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
         }
-        .padding(20)
-        .frame(maxWidth: .infinity,maxHeight: 80, alignment: .leading)
+        .padding()
+        .frame(maxWidth: .infinity)
         .background(Color.white)
     }
 }
@@ -38,6 +47,20 @@ struct ContentView: View {
                 GraphView()
                 ExpenseView(amount: $amount, description: $description)
                     .background(Color(.systemGray6))
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("АВТОМОБИЛЬ")
+                        .font(.caption)
+                        .padding(15)
+                    Divider()
+                    CarExpenseRow(car: "С 329 АХ 40", amount: 215, percentage: 46)
+                    Divider()
+                    CarExpenseRow(car: "С 480 АС 40", amount: 125, percentage: 27)
+                    Divider()
+                    CarExpenseRow(car: "У 177 АА 797", amount: 125, percentage: 27)
+                    Divider()
+                    CarExpenseRow(car: "Все", amount: 465, percentage: 100)
+                }
+                .background(Color(.systemGray6))
             }
         }
         .background(Color(.systemGray6))

@@ -13,6 +13,7 @@
 		6BEE78B62C0ADB32003D9F53 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BEE78B52C0ADB32003D9F53 /* Preview Assets.xcassets */; };
 		6BEE78BD2C0B01B6003D9F53 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE78BC2C0B01B6003D9F53 /* GraphView.swift */; };
 		6BEE78BF2C0B10D0003D9F53 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE78BE2C0B10D0003D9F53 /* HeaderView.swift */; };
+		6BEE78C12C0B15BB003D9F53 /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE78C02C0B15BB003D9F53 /* ExpenseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		6BEE78B52C0ADB32003D9F53 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6BEE78BC2C0B01B6003D9F53 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		6BEE78BE2C0B10D0003D9F53 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		6BEE78C02C0B15BB003D9F53 /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 		6BEE78AD2C0ADB30003D9F53 /* FakeApp */ = {
 			isa = PBXGroup;
 			children = (
+				6BEE78C02C0B15BB003D9F53 /* ExpenseView.swift */,
 				6BEE78BE2C0B10D0003D9F53 /* HeaderView.swift */,
 				6BEE78BC2C0B01B6003D9F53 /* GraphView.swift */,
 				6BEE78AE2C0ADB30003D9F53 /* FakeAppApp.swift */,
@@ -146,6 +149,7 @@
 				6BEE78B12C0ADB30003D9F53 /* ContentView.swift in Sources */,
 				6BEE78AF2C0ADB30003D9F53 /* FakeAppApp.swift in Sources */,
 				6BEE78BD2C0B01B6003D9F53 /* GraphView.swift in Sources */,
+				6BEE78C12C0B15BB003D9F53 /* ExpenseView.swift in Sources */,
 				6BEE78BF2C0B10D0003D9F53 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
