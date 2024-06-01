@@ -10,7 +10,6 @@ import SwiftUI
 struct CarExpenseRow: View {
     @Binding var car: String
     @Binding var amount: String
-    @Binding var percentage: String
     @Binding var carDescript: String
     var onDelete: () -> Void
     
@@ -27,16 +26,11 @@ struct CarExpenseRow: View {
             }
             Spacer()
             HStack(spacing: 4) {
-                VStack(alignment: .trailing, spacing: 4) {
-                    TextField("Сумма", text: $amount)
-                        .font(.headline)
-                        .frame(width: 50)
-                    TextField("Процент", text: $percentage)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                        .frame(width: 40)
-                }
+                TextField("Сумма", text: $amount)
+                    .font(.system(size: 15))
+                    .frame(width: 100)
                 Button(action: {
+                    // Действие для стрелки
                 }) {
                     Image(systemName: "chevron.down")
                         .foregroundColor(.blue)
@@ -56,7 +50,6 @@ struct CarExpense: Identifiable {
     var id = UUID()
     var car: String
     var amount: String
-    var percentage: String
     var carDescript: String
 }
 
@@ -70,7 +63,7 @@ struct CarExpenseTableView: View {
                 .padding()
             Divider()
             ForEach($carExpenses) { $expense in
-                CarExpenseRow(car: $expense.car, amount: $expense.amount, percentage: $expense.percentage, carDescript: $expense.carDescript, onDelete: {
+                CarExpenseRow(car: $expense.car, amount: $expense.amount, carDescript: $expense.carDescript, onDelete: {
                     if let index = carExpenses.firstIndex(where: { $0.id == expense.id }) {
                         carExpenses.remove(at: index)
                     }
@@ -85,7 +78,7 @@ struct CarExpenseTableView: View {
     }
     
     func addNewCarExpense() {
-        let newExpense = CarExpense(car: "Новый автомобиль", amount: "0 ₽", percentage: "0%", carDescript: "")
+        let newExpense = CarExpense(car: "Новый автомобиль", amount: "0 ₽ (0%)", carDescript: "")
         carExpenses.append(newExpense)
     }
 }
@@ -95,10 +88,10 @@ struct ContentView: View {
     @State private var description: String = "Общая сумма расходов за 31.05"
     
     @State private var carExpenses = [
-        CarExpense(car: "С 329 АХ 40", amount: "215 ₽", percentage: "46%", carDescript: "(стария)"),
-        CarExpense(car: "С 480 АС 40", amount: "125 ₽", percentage: "27%", carDescript: "(прадо)"),
-        CarExpense(car: "У 177 АА 797", amount: "125 ₽", percentage: "27%", carDescript: "(порше 718)"),
-        CarExpense(car: "Все", amount: "465 ₽", percentage: "100%", carDescript: "")
+        CarExpense(car: "С 329 АХ 40", amount: "215 ₽ (46%)", carDescript: "(стария)"),
+        CarExpense(car: "С 480 АС 40", amount: "125 ₽ (27%)", carDescript: "(прадо)"),
+        CarExpense(car: "У 177 АА 797", amount: "125 ₽ (27%)", carDescript: "(порше 718)"),
+        CarExpense(car: "Все", amount: "465 ₽ (100%)", carDescript: "")
     ]
     
     var body: some View {
