@@ -51,29 +51,30 @@ struct BarChartView: View {
     
     var body: some View {
         VStack {
-            HStack(spacing: 20) {
+            HStack(spacing: 4) {
                 ForEach(data.indices, id: \.self) { index in
-                    VStack {
-                        Text("\(data[index]) ₽")
-                            .font(.system(size: 8))
-                            .foregroundColor(.gray)
-                            .frame(maxWidth: .infinity)
-                        DashedLine()
-                            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                            .foregroundColor(.gray.opacity(0.5))
-                            .frame(height: 200) // высота линии
-                    }
+                    Text("\(data[index]) ₽")
+                        .font(.system(size: 8))
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity)
                 }
             }
             .padding(.bottom, 10)
             
             HStack(spacing: 20) {
                 ForEach(data.indices, id: \.self) { index in
-                    VStack {
-                        Spacer()
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
-                            .frame(height: CGFloat(data[index]) / 10)
+                    ZStack {
+                        DashedLine()
+                            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                            .foregroundColor(.gray.opacity(0.5))
+                            .frame(height: 350)
+                        
+                        VStack {
+                            Spacer()
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(data[index] == 0 ? Color.clear : Color.green.opacity(0.8))
+                                .frame(height: CGFloat(data[index]) / 10)
+                        }
                     }
                     .frame(maxHeight: .infinity, alignment: .bottom)
                 }
@@ -81,7 +82,7 @@ struct BarChartView: View {
             .padding(.horizontal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, 10)
+        .padding(.top, 340)
         .background(Color.white)
     }
 }
@@ -92,7 +93,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             BarChartView()
-         //   DateView()
+            DateView()
         }
     }
 }
